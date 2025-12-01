@@ -55,19 +55,21 @@
             border: 1px solid #ced4da; padding: 5px; border-radius: 4px;
         }
         
-        /* [핵심 수정] 테이블 너비 강제 확장 및 세로줄 제거 */
-        /* display: table과 width: 100%를 강제하여 화면 끝까지 늘림 */
+        /* [핵심 수정] 테이블 간격 조정 및 스타일 */
         table.dataTable,
         .markdown-body table {
             width: 100% !important;
-            display: table !important; /* GitHub CSS의 block 속성 덮어쓰기 */
+            display: table !important; 
             border-collapse: collapse !important;
             border: none !important;
             box-shadow: none !important;
+            
+            /* [NEW] 위쪽 여백 추가 (검색창과 간격 벌리기) */
+            margin-top: 20px !important; 
             margin-bottom: 20px !important;
         }
         
-        /* 헤더 셀 (세로줄 제거, 가로줄 유지) */
+        /* 헤더 셀 */
         table.dataTable thead th {
             background-color: #f8f9fa;
             border-bottom: 2px solid #dee2e6 !important;
@@ -75,17 +77,16 @@
             border-left: none !important;
             border-right: none !important;
             padding: 12px 10px !important;
-            white-space: nowrap; /* 헤더 글자 줄바꿈 방지 */
+            white-space: nowrap; 
         }
         
-        /* 데이터 셀 (세로줄 제거, 가로줄 유지) */
+        /* 데이터 셀 */
         table.dataTable tbody td {
             padding: 12px 10px !important;
             border-bottom: 1px solid #e9ecef !important;
             border-left: none !important;
             border-right: none !important;
             border-top: none !important;
-            /* width: auto !important; 제거하여 자동 분배 유도 */
         }
         
         table.dataTable.no-footer {
