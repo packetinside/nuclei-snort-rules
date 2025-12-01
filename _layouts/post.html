@@ -93,7 +93,9 @@
             <hr>
             <div style="margin-top: 20px;">
                 {% if page.nuclei_url %}<p><strong>🔗 Nuclei Template:</strong> <a href="{{ page.nuclei_url }}" target="_blank">{{ page.nuclei_url }}</a></p>{% endif %}
+                {% if page.pcap %}
                 <p><strong>🦈 Packet Capture:</strong> <a href="{{ site.baseurl }}/pcaps/{{ page.slug }}.pcap" download>⬇️ Download {{ page.slug }}.pcap</a></p>
+                {% endif %}
             </div>
         </div>
 
