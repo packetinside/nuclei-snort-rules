@@ -12,11 +12,8 @@
         body { 
             box-sizing: border-box; 
             min-width: 200px; 
-            
-            /* [핵심] 화면의 95%까지 사용하여 넓게 표시 */
             max-width: 95%; 
-            
-            margin: 0 auto; /* 화면 중앙 정렬 */
+            margin: 0 auto; 
             padding: 45px; 
         }
 
@@ -28,14 +25,25 @@
         a { text-decoration: none; color: #0969da; }
         a:hover { text-decoration: underline; }
 
-        /* 테이블 스타일: 컨테이너 너비(95%)를 꽉 채움 */
-        table { display: table; width: 100%; }
+        /* [핵심 수정] 테이블 가로선 제거 및 스타일 복구 */
+        .markdown-body table {
+            display: table;
+            width: 100%;
+            border-style: hidden !important; /* 외곽선 숨김 */
+        }
+        
+        .markdown-body table tr,
+        .markdown-body table td,
+        .markdown-body table th {
+            border: none !important; /* 셀 사이의 가로/세로선 제거 */
+            background-color: transparent !important; /* 배경색 투명하게 */
+        }
 
-        /* [핵심] 헤더 스타일: 왼쪽 정렬 */
+        /* 헤더 스타일: 왼쪽 정렬 */
         header {
             margin-bottom: 40px;
             width: 100%;
-            text-align: left; /* 왼쪽 정렬 */
+            text-align: left;
         }
         header h1 {
             font-size: 2em;
