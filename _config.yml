@@ -1,0 +1,13 @@
+title: "Nuclei & Snort Rules Archive"
+baseurl: ""
+url: ""
+
+# 마크다운 렌더링 엔진 설정
+markdown: kramdown
+theme: jekyll-theme-minimal
+
+# _cves 폴더를 컬렉션(데이터)으로 사용 설정
+collections:
+  cves:
+    output: true
+    permalink: /cves/:path/
