@@ -8,44 +8,136 @@
     <style>
         body { box-sizing: border-box; min-width: 200px; max-width: 980px; margin: 0 auto; padding: 45px; }
         @media (max-width: 767px) { body { padding: 15px; } }
-        .markdown-body { box-sizing: border-box; }
-        .header-link { font-size: 0.9em; margin-bottom: 20px; display: inline-block; }
-        .pcap-btn {
-            display: inline-block;
-            background-color: #0366d6;
-            color: white !important;
-            padding: 5px 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.9em;
-            margin-top: 5px;
+        
+        .header-link { font-size: 0.9em; margin-bottom: 20px; display: inline-block; text-decoration: none; }
+        
+        /* 탭 버튼 스타일 */
+        .tab-container { margin-top: 30px; border-bottom: 1px solid #d0d7de; }
+        .tab-button {
+            background: none; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;
+            color: #57606a; border-bottom: 2px solid transparent; margin-bottom: -1px;
         }
+        .tab-button:hover { color: #0969da; }
+        .tab-button.active { font-weight: bold; color: #0969da; border-bottom: 2px solid #fd8c73; }
+        
+        /* 탭 내용 영역 */
+        .content-section { display: none; padding-top: 20px; animation: fadeIn 0.3s; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 정보 테이블 스타일 */
+        .meta-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        .meta-table th { text-align: left; background: #f6f8fa; padding: 8px 15px; border: 1px solid #d0d7de; width: 25%; font-weight: 600; }
+        .meta-table td { padding: 8px 15px; border: 1px solid #d0d7de; }
+        .tag { background: #ddf4ff; color: #0969da; padding: 2px 8px; border-radius: 12px; font-size: 0.85em; margin-right: 5px; display: inline-block; margin-bottom: 2px; }
+        
+        /* 알림 박스 */
+        .alert-box { background-color: #fff8c5; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #d4a72c; color: #4a3b05; }
     </style>
 </head>
 <body>
     <div class="markdown-body">
         <a href="{{ site.baseurl }}/" class="header-link">🔙 목록으로 돌아가기</a>
         
-        <h1>{{ page.cve_id }}: {{ page.title }}</h1>
-        
-        {% if page.nuclei_url %}
-        <p>
-            <strong>🔗 Nuclei Template:</strong> 
-            <a href="{{ page.nuclei_url }}" target="_blank">{{ page.nuclei_url }}</a>
-        </p>
-        {% endif %}
+        <h1 style="margin-bottom: 5px;">{{ page.cve_id }}</h1>
+        <p style="font-size: 1.3em; color: #57606a; font-weight: 300; margin-top: 0;">{{ page.title }}</p>
 
-        <p>
-            <strong>🦈 Packet Capture:</strong> 
-            <a href="{{ site.baseurl }}/pcaps/{{ page.slug }}.pcap" download class="pcap-btn">
-                ⬇️ Download {{ page.slug }}.pcap
-            </a>
-        </p>
-        
-        <hr>
-        
-        {{ content }}
-        
+        <div class="tab-container">
+            <button class="tab-button" onclick="openTab('info')" id="btn-info">📋 Vulnerability Info</button>
+            <button class="tab-button" onclick="openTab('rules')" id="btn-rules">🛡️ Snort Rules</button>
+        </div>
+
+        <div id="info" class="content-section">
+            <table class="meta-table">
+                <tr><th>Severity</th><td style="color: #cf222e; font-weight: bold;">{{ page.severity | default: "-" }}</td></tr>
+                <tr><th>CVSS Score</th><td>{{ page.cvss_score | default: "-" }}</td></tr>
+                <tr><th>EPSS Score</th><td>{{ page.epss_score | default: "-" }}</td></tr>
+                <tr><th>Tags</th><td>
+                    {% for tag in page.tags %} <span class="tag">{{ tag }}</span> {% endfor %}
+                </td></tr>
+            </table>
+
+            <div id="original-content">
+                {{ content }}
+            </div>
+
+            {% if page.references %}
+            <h3>📚 References</h3>
+            <ul>
+                {% for ref in page.references %}
+                <li><a href="{{ ref }}" target="_blank">{{ ref }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            
+            <hr>
+            <div style="margin-top: 20px;">
+                {% if page.nuclei_url %}
+                <p><strong>🔗 Nuclei Template:</strong> <a href="{{ page.nuclei_url }}" target="_blank">{{ page.nuclei_url }}</a></p>
+                {% endif %}
+                <p><strong>🦈 Packet Capture:</strong> <a href="{{ site.baseurl }}/pcaps/{{ page.slug }}.pcap" download>⬇️ Download {{ page.slug }}.pcap</a></p>
+            </div>
+        </div>
+
+        <div id="rules" class="content-section">
+            <div class="alert-box">
+                ⚠️ <strong>Notice:</strong> These rules are for detection purposes. Please tune them before applying to a production environment.
+            </div>
+            
+            <div id="rules-container"></div>
+        </div>
     </div>
+
+    <script>
+        // 탭 전환 함수
+        function openTab(tabName) {
+            var contents = document.getElementsByClassName("content-section");
+            var buttons = document.getElementsByClassName("tab-button");
+            
+            for (var i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+            for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+            
+            document.getElementById(tabName).classList.add("active");
+            document.getElementById("btn-" + tabName).classList.add("active");
+        }
+
+        // 페이지 로드 시 실행
+        window.onload = function() {
+            // 1. URL 해시(#info 또는 #rules) 확인하여 탭 열기
+            var hash = window.location.hash.substring(1);
+            if (hash === 'rules') { openTab('rules'); } 
+            else { openTab('info'); }
+
+            // 2. 내용 분리 로직 (Snort Rule을 Info탭 -> Rules탭으로 이동)
+            var sourceDiv = document.getElementById("original-content");
+            var targetDiv = document.getElementById("rules-container");
+            
+            // h2, h3 태그 중 'Snort'라는 단어가 포함된 것을 찾음
+            var headers = sourceDiv.querySelectorAll("h2, h3");
+            
+            headers.forEach(function(header) {
+                if (header.innerText.includes("Snort")) {
+                    // 헤더(제목) 이동
+                    targetDiv.appendChild(header);
+                    
+                    // 헤더 바로 다음에 오는 요소(코드 블록) 찾아서 이동
+                    // Jekyll은 코드 블록을 div.highlighter-rouge 또는 figure.highlight로 감쌈
+                    var nextElem = header.nextElementSibling;
+                    
+                    // 바로 다음 요소가 코드 블록이면 이동 (반복적으로 여러 줄일 경우 대비)
+                    while (nextElem && (nextElem.tagName === 'DIV' || nextElem.tagName === 'FIGURE' || nextElem.tagName === 'PRE')) {
+                        var temp = nextElem.nextElementSibling; // 그 다음 요소 미리 저장
+                        targetDiv.appendChild(nextElem);
+                        nextElem = temp;
+                    }
+                }
+            });
+            
+            // 만약 룰이 하나도 없으면 안내 메시지 표시
+            if (targetDiv.innerHTML.trim() === "") {
+                targetDiv.innerHTML = "<p>등록된 Snort Rule이 없습니다.</p>";
+            }
+        };
+    </script>
 </body>
 </html>
