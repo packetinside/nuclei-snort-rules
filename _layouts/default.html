@@ -25,18 +25,29 @@
         a { text-decoration: none; color: #0969da; }
         a:hover { text-decoration: underline; }
 
-        /* [핵심 수정] 테이블 가로선 제거 및 스타일 복구 */
+        /* [핵심 수정] 테이블 스타일: 가로줄(O), 세로줄(X) */
         .markdown-body table {
             display: table;
             width: 100%;
-            border-style: hidden !important; /* 외곽선 숨김 */
+            border-collapse: collapse; /* 선이 겹치지 않게 */
         }
         
-        .markdown-body table tr,
-        .markdown-body table td,
-        .markdown-body table th {
-            border: none !important; /* 셀 사이의 가로/세로선 제거 */
-            background-color: transparent !important; /* 배경색 투명하게 */
+        /* 헤더(th)와 셀(td) 스타일 설정 */
+        .markdown-body table th,
+        .markdown-body table td {
+            /* 1. 일단 모든 테두리를 없앱니다 (세로줄 제거 효과) */
+            border: none !important;
+            
+            /* 2. 아래쪽 테두리(가로줄)만 다시 그립니다 (색상은 연한 회색) */
+            border-bottom: 1px solid #e1e4e8 !important;
+            
+            /* 3. 여백 조정 */
+            padding: 12px 8px !important;
+        }
+
+        /* 선택사항: 맨 마지막 줄은 가로선 없애기 (깔끔함 유지) */
+        .markdown-body table tr:last-child td {
+            border-bottom: none !important;
         }
 
         /* 헤더 스타일: 왼쪽 정렬 */
