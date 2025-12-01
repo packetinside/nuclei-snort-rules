@@ -3,15 +3,17 @@ layout: default
 title: Database
 ---
 
-<div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-    <h2 style="margin: 0; border: none; font-size: 1.5em; color: #343a40;">
-        <i class="fas fa-database" style="color: #d9534f; margin-right: 10px;"></i> Vulnerabilities
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%;">
+    
+    <h2 style="margin: 0; border: none; font-size: 1.5em; color: #343a40; font-weight: 700;">
+        <i class="fas fa-database" style="color: #d9534f; margin-right: 8px;"></i> Vulnerabilities
     </h2>
     
-    <div style="position: relative; width: 300px;">
-        <i class="fas fa-search" style="position: absolute; left: 10px; top: 10px; color: #aaa;"></i>
+    <div style="position: relative; width: 250px;">
+        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #adb5bd; font-size: 0.9em;"></i>
+        
         <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search CVE, Title..." 
-               style="width: 100%; padding: 8px 10px 8px 35px; border: 1px solid #ced4da; border-radius: 4px; font-size: 0.95em;">
+               style="width: 100%; padding: 10px 10px 10px 35px; border: 1px solid #ced4da; border-radius: 5px; font-size: 0.9em; box-sizing: border-box; outline: none; transition: 0.2s;">
     </div>
 </div>
 
@@ -38,7 +40,7 @@ title: Database
 
       <td style="text-align: center;">
         {% if cve.nuclei_url %}
-        <a href="{{ cve.nuclei_url }}" target="_blank" style="color: #28a745;">
+        <a href="{{ cve.nuclei_url }}" target="_blank" style="color: #28a745; font-size: 0.9em;">
             <i class="fas fa-file-code"></i> Template
         </a>
         {% else %}
@@ -47,7 +49,7 @@ title: Database
       </td>
 
       <td style="text-align: center;">
-        <a href="{{ '/pcaps/' | append: cve.slug | append: '.pcap' | relative_url }}" download style="color: #17a2b8;" title="Download PCAP">
+        <a href="{{ '/pcaps/' | append: cve.slug | append: '.pcap' | relative_url }}" download style="color: #17a2b8; font-size: 0.9em;" title="Download PCAP">
           <i class="fas fa-download"></i> PCAP
         </a>
       </td>
@@ -62,31 +64,28 @@ title: Database
   </tbody>
 </table>
 
-<div id="noResults" style="display: none; text-align: center; padding: 30px; color: #777;">
-    <p>No matching records found.</p>
+<div id="noResults" style="display: none; text-align: center; padding: 40px; color: #6c757d; background-color: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+    <p style="margin:0;"><i class="fas fa-exclamation-circle"></i> No matching records found.</p>
 </div>
 
 <script>
 function filterTable() {
-  // 1. 인풋 값 가져오기
   var input = document.getElementById("searchInput");
   var filter = input.value.toUpperCase();
-  
-  // 2. 테이블 및 행 가져오기
   var table = document.getElementById("vulnTable");
   var tr = table.getElementsByTagName("tr");
   var hasResult = false;
 
-  // 3. 모든 행 반복 (헤더 제외)
+  // 헤더(0번째 줄)는 건너뛰고 1번째 줄부터 반복
   for (var i = 1; i < tr.length; i++) {
-    var tdId = tr[i].getElementsByTagName("td")[0]; // CVE ID 컬럼
-    var tdTitle = tr[i].getElementsByTagName("td")[1]; // Title 컬럼
+    var tdId = tr[i].getElementsByTagName("td")[0];     // CVE ID
+    var tdTitle = tr[i].getElementsByTagName("td")[1];  // Title
     
     if (tdId || tdTitle) {
       var txtId = tdId.textContent || tdId.innerText;
       var txtTitle = tdTitle.textContent || tdTitle.innerText;
       
-      // 검색어가 ID나 Title에 포함되어 있으면 보여줌
+      // 검색어가 포함되어 있으면 표시
       if (txtId.toUpperCase().indexOf(filter) > -1 || txtTitle.toUpperCase().indexOf(filter) > -1) {
         tr[i].style.display = "";
         hasResult = true;
@@ -96,7 +95,7 @@ function filterTable() {
     }       
   }
   
-  // 결과가 하나도 없으면 메시지 표시
+  // 결과 없음 메시지 표시/숨김
   document.getElementById("noResults").style.display = hasResult ? "none" : "block";
 }
 </script>
