@@ -21,7 +21,7 @@
       content:"GET";
       http_uri;
       content:"/API/regionsDiscovery.php",nocase;
-      content:"master=spark://",nocase,distance:0;
+      content:"master=spark://",nocase,distance 0;
       pcre:!"/spark:\/\/(10\.|172\.16\.|192\.168\.)[0-9]{1,3}(\.[0-9]{1,3}){3}/i";
       sid:1000001;
       rev:1;
