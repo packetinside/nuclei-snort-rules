@@ -11,7 +11,8 @@ title: Home
       <th style="width: 15%">CVE ID</th>
       <th style="width: 35%">Title</th>
       <th style="width: 15%">Nuclei</th>
-      <th style="width: 15%">Pcap</th> <th style="width: 20%">Snort Rule</th>
+      <th style="width: 15%">Pcap</th>
+      <th style="width: 20%">Snort Rule</th>
     </tr>
   </thead>
   <tbody>
@@ -20,7 +21,7 @@ title: Home
       <td style="font-weight:bold; color:#d9534f;">{{ cve.cve_id }}</td>
 
       <td>
-        <a href="{{ cve.url }}" style="text-decoration: none; color: #0366d6;">
+        <a href="{{ cve.url | relative_url }}" style="text-decoration: none; color: #0366d6;">
           {{ cve.title }}
         </a>
       </td>
@@ -34,13 +35,13 @@ title: Home
       </td>
 
       <td style="text-align: center;">
-        <a href="/pcaps/{{ cve.slug }}.pcap" download style="text-decoration: none;" title="Download PCAP">
+        <a href="{{ 'pcaps/' | append: cve.slug | append: '.pcap' | relative_url }}" download style="text-decoration: none;" title="Download PCAP">
           🦈 Download
         </a>
       </td>
 
       <td style="text-align: center;">
-        <a href="{{ cve.url }}#snort-rules" style="background-color: #f6f8fa; padding: 4px 8px; border: 1px solid #d1d5da; border-radius: 3px; text-decoration: none; font-size: 0.85em; color: #24292e;">
+        <a href="{{ cve.url | relative_url }}#snort-rules" style="background-color: #f6f8fa; padding: 4px 8px; border: 1px solid #d1d5da; border-radius: 3px; text-decoration: none; font-size: 0.85em; color: #24292e;">
           📜 View Rules
         </a>
       </td>
