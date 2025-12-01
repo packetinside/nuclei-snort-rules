@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
+    
+    <style>
+        /* [핵심 수정] 화면 너비 설정 */
+        body { 
+            box-sizing: border-box; 
+            min-width: 200px; 
+            
+            /* 기존 980px 제한을 풀고 화면의 95%까지 사용 */
+            max-width: 95%; 
+            
+            margin: 0 auto; 
+            padding: 45px; 
+        }
+
+        @media (max-width: 767px) { 
+            body { padding: 15px; } 
+        }
+        
+        /* 링크 스타일 (파란색) */
+        a { text-decoration: none; color: #0969da; }
+        a:hover { text-decoration: underline; }
+
+        /* 테이블 스타일 보정 */
+        table { display: table; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="markdown-body">
+        {{ content }}
+        
+        <footer style="margin-top: 50px; text-align: center; font-size: 0.8em; color: #777;">
+            <hr>
+            <p>Security Rules Archive by PacketInside</p>
+        </footer>
+    </div>
+</body>
+</html>
