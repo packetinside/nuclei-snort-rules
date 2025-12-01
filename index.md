@@ -5,7 +5,7 @@ title: Database
 
 <div style="margin-bottom: 20px;">
     <h2 style="margin: 0; border: none; font-size: 1.5em; color: #343a40; font-weight: 700;">
-        <i class="fas fa-database" style="color: #d9534f; margin-right: 8px;"></i> Snort Rule Database
+        <i class="fas fa-database" style="color: #d9534f; margin-right: 8px;"></i> Rule Database
     </h2>
 </div>
 
