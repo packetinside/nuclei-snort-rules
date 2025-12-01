@@ -9,9 +9,9 @@ title: Home
   <thead>
     <tr>
       <th style="width: 15%">CVE ID</th>
-      <th style="width: 45%">Title</th>
-      <th style="width: 20%">Nuclei</th>
-      <th style="width: 20%">Snort Rule</th>
+      <th style="width: 35%">Title</th>
+      <th style="width: 15%">Nuclei</th>
+      <th style="width: 15%">Pcap</th> <th style="width: 20%">Snort Rule</th>
     </tr>
   </thead>
   <tbody>
@@ -31,6 +31,12 @@ title: Home
         {% else %}
         -
         {% endif %}
+      </td>
+
+      <td style="text-align: center;">
+        <a href="/pcaps/{{ cve.slug }}.pcap" download style="text-decoration: none;" title="Download PCAP">
+          🦈 Download
+        </a>
       </td>
 
       <td style="text-align: center;">
