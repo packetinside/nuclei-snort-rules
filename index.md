@@ -35,7 +35,7 @@ title: Home
       </td>
 
       <td style="text-align: center;">
-        <a href="{{ 'pcaps/' | append: cve.slug | append: '.pcap' | relative_url }}" download style="text-decoration: none;" title="Download PCAP">
+        <a href="{{ '/pcaps/' | append: cve.slug | append: '.pcap' | relative_url }}" download style="text-decoration: none;" title="Download PCAP">
           🦈 Download
         </a>
       </td>
