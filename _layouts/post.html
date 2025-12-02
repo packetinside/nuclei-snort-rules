@@ -80,21 +80,73 @@
         <div id="info" class="content-section">
             <table class="meta-table">
                 <tr><th>Title</th><td>{{ page.title }}</td></tr>
-                <tr><th>Severity</th><td style="color: #cf222e; font-weight: bold;">{{ page.severity | default: "-" }}</td></tr>
-                <tr><th>CVSS Score</th><td>{{ page.cvss_score | default: "-" }}</td></tr>
-                <tr><th>EPSS Score</th><td>{{ page.epss_score | default: "-" }}</td></tr>
-                <tr><th>Tags</th><td>{% for tag in page.tags %} <span class="tag">{{ tag }}</span> {% endfor %}</td></tr>
+                
+                {% if page.author %}
+                <tr><th>Author</th><td>{{ page.author }}</td></tr>
+                {% endif %}
+
+                {% if page.severity %}
+                <tr><th>Severity</th><td style="color: #cf222e; font-weight: bold;">{{ page.severity | capitalize }}</td></tr>
+                {% endif %}
+                
+                {% if page.impact %}
+                <tr><th>Impact</th><td>{{ page.impact }}</td></tr>
+                {% endif %}
+
+                {% if page.remediation %}
+                <tr><th>Remediation</th><td>{{ page.remediation }}</td></tr>
+                {% endif %}
+
+                {% if page.classification %}
+                    {% if page.classification.cvss-score %}
+                    <tr><th>CVSS Score</th><td>{{ page.classification.cvss-score }}</td></tr>
+                    {% endif %}
+                    {% if page.classification.epss-score %}
+                    <tr><th>EPSS Score</th><td>{{ page.classification.epss-score }}</td></tr>
+                    {% endif %}
+                    {% if page.classification.cve-id %}
+                    <tr><th>CVE ID</th><td>{{ page.classification.cve-id }}</td></tr>
+                    {% endif %}
+                    {% if page.classification.cwe-id %}
+                    <tr><th>CWE ID</th><td>{{ page.classification.cwe-id }}</td></tr>
+                    {% endif %}
+                {% endif %}
+                
+                {% if page.metadata %}
+                    {% if page.metadata.shodan-query %}
+                    <tr><th>Shodan Query</th><td>{{ page.metadata.shodan-query }}</td></tr>
+                    {% endif %}
+                    {% if page.metadata.fofa-query %}
+                    <tr><th>Fofa Query</th><td>{{ page.metadata.fofa-query }}</td></tr>
+                    {% endif %}
+                {% endif %}
+
+                {% if page.tags %}
+                <tr><th>Tags</th><td>
+                    {% for tag in page.tags %} <span class="tag">{{ tag }}</span> {% endfor %}
+                </td></tr>
+                {% endif %}
             </table>
+
             <div>{{ content }}</div>
-            {% if page.references %}
+
+            {% if page.reference %}
             <h3>📚 References</h3>
-            <ul>{% for ref in page.references %}<li><a href="{{ ref }}" target="_blank">{{ ref }}</a></li>{% endfor %}</ul>
+            <ul>
+                {% for ref in page.reference %}
+                <li><a href="{{ ref }}" target="_blank">{{ ref }}</a></li>
+                {% endfor %}
+            </ul>
             {% endif %}
+            
             <hr>
             <div style="margin-top: 20px;">
-                {% if page.nuclei_url %}<p><strong>🔗 Nuclei Template:</strong> <a href="{{ page.nuclei_url }}" target="_blank">{{ page.nuclei_url }}</a></p>{% endif %}
+                {% if page.nuclei_url %}
+                <p><strong>🔗 Nuclei Template:</strong> <a href="{{ page.nuclei_url }}" target="_blank">{{ page.nuclei_url }}</a></p>
+                {% endif %}
+                
                 {% if page.pcap %}
-                <p><strong>🦈 Packet Capture:</strong> <a href="{{ site.baseurl }}/pcaps/{{ page.slug }}.pcap" download>⬇️ Download {{ page.slug }}.pcap</a></p>
+                <p><strong>🦈 Packet Capture:</strong> <a href="{{ site.baseurl }}/pcaps/{{ page.cve_id | downcase }}.pcap" download>⬇️ Download {{ page.cve_id | downcase }}.pcap</a></p>
                 {% endif %}
             </div>
         </div>
