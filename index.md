@@ -25,7 +25,7 @@ title: Database
       <td style="font-weight:bold; color: #5f6368; font-family: monospace; font-size: 0.8em;">{{ cve.cve_id }}</td>
 
       <td>
-        <a href="{{ cve.url | relative_url }}#info" style="font-weight: 500; color: #455a64; font-size: 0.9em;">
+        <a href="{{ cve.url | relative_url }}#info" style="font-weight: 500; color: #0056b3; font-size: 0.9em;">
           {{ cve.title }}
         </a>
       </td>
