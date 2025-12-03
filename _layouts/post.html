@@ -123,7 +123,16 @@
 
                 {% if page.tags %}
                 <tr><th>Tags</th><td>
-                    {% for tag in page.tags %} <span class="tag">{{ tag }}</span> {% endfor %}
+                    {% comment %} 태그가 리스트인지 문자열인지 확인하여 처리 {% endcomment %}
+                    {% assign tags_raw = page.tags %}
+                    
+                    {% if tags_raw.first %}
+                        {% assign tags_list = tags_raw %} {% else %}
+                        {% assign tags_list = tags_raw | split: ',' %} {% endif %}
+                    
+                    {% for tag in tags_list %}
+                        <span class="tag">{{ tag | strip }}</span>
+                    {% endfor %}
                 </td></tr>
                 {% endif %}
             </table>
