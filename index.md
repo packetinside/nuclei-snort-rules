@@ -12,8 +12,8 @@ title: Database
 <table id="vulnTable" class="display" style="width:100%">
   <thead>
     <tr>
-      <th style="width: 15%">CVE ID</th>
-      <th style="width: 35%">Title</th>
+      <th style="width: 12%">CVE ID</th>
+      <th style="width: 38%">Title</th>
       <th style="width: 15%; text-align: center;">Nuclei</th>
       <th style="width: 15%; text-align: center;">Pcap</th>
       <th style="width: 20%; text-align: center;">Snort Rule</th>
@@ -22,10 +22,12 @@ title: Database
   <tbody>
     {% for cve in site.cves %}
     <tr>
-      <td style="font-weight:bold; color:#1a237e; font-family: monospace; font-size: 0.85em;">{{ cve.cve_id }}</td>
+      <td style="color: #000000; font-family: monospace; font-size: 0.85em;">{{ cve.cve_id }}</td>
 
       <td>
-        <a href="{{ cve.url | relative_url }}#info" style="font-weight: 500; color: #1a237e; font-size: 0.85em;">{{ cve.title }}</a>
+        <a href="{{ cve.url | relative_url }}#info" style="font-weight: 500; color: #455a64; font-size: 0.9em;">
+          {{ cve.title }}
+        </a>
       </td>
 
       <td style="text-align: center;">
