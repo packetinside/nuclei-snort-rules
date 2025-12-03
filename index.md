@@ -32,7 +32,7 @@ title: Database
 
       <td style="text-align: center;">
         {% if cve.nuclei_url %}
-        <a href="{{ cve.nuclei_url }}" target="_blank" style="color: #28a745; font-size: 0.9em;">
+        <a href="{{ cve.nuclei_url }}" target="_blank" style="color: #0d233a; font-size: 0.9em;">
             <i class="fas fa-file-code"></i> Template
         </a>
         {% else %}
