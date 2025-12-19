@@ -1,0 +1,25 @@
+[클라이언트에서 실행]
+nuclei_parser.py_v2.py
+ - md, pcap  파일 생성 (clean_pcap 통합)
+ - 파일 생성 완료 후 github에 자동 업로드
+ - nuclei_template의 수정 된 파일만 업데이트 기능
+
+
+
+[서버에서 실행]
+http_server.py + responses.json
+ - 웹 요청에 대한 200 응답
+
+create_resonse.json_from_nuclei_temp.py
+ - responses.json 파일을 생성해 주는 코드
+ - 웹 요청에 맞춰 응답 코드 및 데이터 피드백 설정
+
+
+
+[기타]
+
+clean_pcap.py
+ - pcap 파일의 retransmission, dup 패킷 제거
+ - mac, ip 주소 변경
+
+ 

@@ -1,0 +1,29 @@
+id: step2-js-check
+info:
+  name: JavaScript Engine Check
+  author: debug
+  severity: info
+  description: JS 엔진이 정상 작동하는지 확인합니다.
+
+flow: javascript() && http(1)
+
+javascript:
+  - code: |
+      // 복잡한 로직 없이 단순히 true를 반환
+      console.log("[DEBUG] JS Engine started successfully");
+      true
+
+http:
+  - raw:
+      - |
+        GET /_layouts/15/ToolPane.aspx?debug=js_success HTTP/1.1
+        Host: {{Hostname}}
+
+    matchers:
+      - type: word
+        words:
+          - "Microsoft"
+          - "SharePoint"
+          - "IIS"
+        part: header
+        condition: or
