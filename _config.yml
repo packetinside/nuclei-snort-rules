@@ -1,0 +1,16 @@
+title: "PACKET INSIDE"
+description: "Network Security"
+baseurl: ""
+url: "https://packetinside.github.io"
+
+# 마크다운 렌더링 엔진 설정
+markdown: kramdown
+theme: jekyll-theme-minimal
+
+# _cves 폴더를 컬렉션(데이터)으로 사용 설정
+collections:
+  cves:
+    output: true
+    # [중요] :path 대신 :slug를 사용하면 폴더 깊이와 상관없이 파일명만 URL로 씁니다.
+    # 예: _cves/2025/cve-2025-1234.md -> https://.../cves/cve-2025-1234/
+    permalink: /cves/:slug/
