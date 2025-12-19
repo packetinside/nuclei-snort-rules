@@ -14,3 +14,8 @@ collections:
     # [중요] :path 대신 :slug를 사용하면 폴더 깊이와 상관없이 파일명만 URL로 씁니다.
     # 예: _cves/2025/cve-2025-1234.md -> https://.../cves/cve-2025-1234/
     permalink: /cves/:slug/
+
+exclude:
+  - pcaps/
+  - "*.pcap"
+  - "*.pcapng"
