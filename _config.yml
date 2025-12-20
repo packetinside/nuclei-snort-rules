@@ -15,7 +15,3 @@ collections:
     # 예: _cves/2025/cve-2025-1234.md -> https://.../cves/cve-2025-1234/
     permalink: /cves/:slug/
 
-exclude:
-  - pcaps/
-  - "*.pcap"
-  - "*.pcapng"
